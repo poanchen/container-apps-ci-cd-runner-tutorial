@@ -22,6 +22,6 @@ USER runner
 
 # install docker
 RUN curl -fsSL https://get.docker.com -o get-docker.sh | bash
-RUN service start docker
+RUN sudo service start docker
 
 ENTRYPOINT ["./entrypoint.sh"]
