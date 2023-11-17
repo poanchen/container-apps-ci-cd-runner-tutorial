@@ -2,6 +2,11 @@ FROM ghcr.io/actions/actions-runner:2.304.0
 
 USER root
 
+COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
+
+USER runner
+
 # install curl and jq
 RUN apt-get update && apt-get install -y curl jq && \
     apt-get clean && \
@@ -18,10 +23,5 @@ RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/mi
 # install docker
 RUN curl -fsSL https://get.docker.com -o get-docker.sh | bash
 RUN systemctl start docker
-
-COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
-RUN chmod +x ./entrypoint.sh
-
-USER runner
 
 ENTRYPOINT ["./entrypoint.sh"]
