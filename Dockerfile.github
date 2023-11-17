@@ -10,15 +10,15 @@ RUN apt-get update && apt-get install -y curl jq && \
 # install az cli
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
-RUN chmod +x ./entrypoint.sh
-
-USER runner
-
 # install minikube
 RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
     chmod +x minikube && \
     mv minikube /usr/local/bin/
+
+COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
+
+USER runner
 
 # install docker
 RUN curl -fsSL https://get.docker.com -o get-docker.sh | bash
