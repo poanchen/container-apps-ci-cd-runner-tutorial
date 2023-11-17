@@ -15,30 +15,9 @@ RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/mi
     chmod +x minikube && \
     mv minikube /usr/local/bin/
 
-# Add Docker's official GPG key:
-RUN apt-get update
-RUN apt-get install ca-certificates curl gnupg
-RUN install -m 0755 -d /etc/apt/keyrings
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-RUN chmod a+r /etc/apt/keyrings/docker.gpg
-
-# Add the repository to Apt sources:
-RUN \
-  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-  tee /etc/apt/sources.list.d/docker.list > /dev/null
-RUN apt-get update
-
-# install Docker
-RUN apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
 USER runner
-
-# install docker
-# RUN curl -fsSL https://get.docker.com -o get-docker.sh | bash
-# RUN sudo service start docker
 
 ENTRYPOINT ["./entrypoint.sh"]
