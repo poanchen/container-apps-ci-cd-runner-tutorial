@@ -16,8 +16,7 @@ RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/mi
     mv minikube /usr/local/bin/
 
 # install docker
-RUN curl -fsSL https://get.docker.com | sh
-RUN chmod 777 /var/run/docker.sock
+RUN docker --version
 
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
