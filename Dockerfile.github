@@ -15,13 +15,16 @@ RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/mi
     chmod +x minikube && \
     mv minikube /usr/local/bin/
 
+# install Docker
+RUN apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
 USER runner
 
 # install docker
-RUN curl -fsSL https://get.docker.com -o get-docker.sh | bash
-RUN sudo service start docker
+# RUN curl -fsSL https://get.docker.com -o get-docker.sh | bash
+# RUN sudo service start docker
 
 ENTRYPOINT ["./entrypoint.sh"]
