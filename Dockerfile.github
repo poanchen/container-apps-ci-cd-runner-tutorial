@@ -16,7 +16,7 @@ RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/mi
     mv minikube /usr/local/bin/
 
 # install docker
-RUN docker --version
+RUN docker run hello-world
 
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
