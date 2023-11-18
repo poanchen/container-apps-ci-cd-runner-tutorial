@@ -12,7 +12,7 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 # install k3s
 RUN curl -sfL https://get.k3s.io | sh -
-RUN service k3s status
+RUN k3s --version
 
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
