@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y curl jq && \
 # install az cli
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
+# install k3s
+RUN curl -sfL https://get.k3s.io | sh -
+
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
