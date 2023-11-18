@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y curl jq && \
 # install az cli
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
+# install KVM
 RUN apt install -y \
     qemu-kvm \
     libvirt-clients \
@@ -18,6 +19,11 @@ RUN apt install -y \
     virt-manager
 RUN usermod -a -G libvirt $(whoami)
 RUN newgrp libvirt
+
+# install KVM2 driver
+RUN curl -Lo docker-machine-driver-kvm2 https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2 && \
+    chmod +x docker-machine-driver-kvm2 && \
+    cp docker-machine-driver-kvm2 /usr/local/bin/
 
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
