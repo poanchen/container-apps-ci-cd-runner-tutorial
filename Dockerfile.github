@@ -16,7 +16,12 @@ RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/mi
     mv minikube /usr/local/bin/
 
 # install docker
-RUN docker system info
+RUN docker run --privileged --name some-docker -d \
+	--network some-network --network-alias docker \
+	-e DOCKER_TLS_CERTDIR=/certs \
+	-v some-docker-certs-ca:/certs/ca \
+	-v some-docker-certs-client:/certs/client \
+	docker:dind
 
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
