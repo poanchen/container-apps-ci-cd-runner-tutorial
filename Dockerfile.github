@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y curl jq && \
 # install az cli
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-RUN apt install \
+RUN apt install -y \
     qemu-kvm \
     libvirt-clients \
     libvirt-daemon-system \
