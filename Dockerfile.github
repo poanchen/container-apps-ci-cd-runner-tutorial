@@ -13,6 +13,15 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 # install k3s
 RUN curl -sfL https://get.k3s.io | sh -
 
+RUN apt install \
+    qemu-kvm \
+    libvirt-clients \
+    libvirt-daemon-system \
+    bridge-utils \
+    virt-manager
+RUN usermod -a -G libvirt $(whoami)
+RUN newgrp libvirt
+
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
