@@ -10,18 +10,9 @@ RUN apt-get update && apt-get install -y curl jq && \
 # install az cli
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-# install minikube
-RUN curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
-    chmod +x minikube && \
-    mv minikube /usr/local/bin/
-
-# install docker
-RUN docker run --privileged --name some-docker -d \
-	--network some-network --network-alias docker \
-	-e DOCKER_TLS_CERTDIR=/certs \
-	-v some-docker-certs-ca:/certs/ca \
-	-v some-docker-certs-client:/certs/client \
-	docker:dind
+# install k3s
+RUN curl -sfL https://get.k3s.io | sh -
+RUN service k3s status
 
 COPY github-actions-runner/entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
